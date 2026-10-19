@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100d17">
+  <meta name="description" content="DreamMate AI — chat with fictional characters.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <title>DreamMate AI</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="brand">dreammate<span>ai</span></div>
+        <div class="subbrand">Your stories. Your characters.</div>
+      </div>
+      <button class="icon-button" id="settingsButton" aria-label="Settings">⚙</button>
+    </header>
+
+    <main id="homeView">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR NEXT STORY STARTS HERE</p>
+          <h1>Someone new<br><em>is waiting.</em></h1>
+          <p>Meet fictional characters, share a moment, and create your own story.</p>
+          <button class="primary-button" id="heroChatButton">Meet Alex&nbsp; ↗</button>
+        </div>
+        <div class="hero-orb" aria-hidden="true"><div class="orb-face">A</div><span class="orb-star">✦</span></div>
+      </section>
+
+      <section class="section-head">
+        <div><p class="eyebrow">PICK YOUR VIBE</p><h2>Characters</h2></div>
+        <span class="tiny-label">3 STORIES</span>
+      </section>
+      <div class="character-grid" id="characterGrid"></div>
+
+      <section class="section-head continue-head">
+        <div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2>Recent chats</h2></div>
+        <button class="text-button" id="clearChatsButton">Clear</button>
+      </section>
+      <div id="recentChats" class="recent-list"></div>
+      <p class="footer-note">Fictional AI characters · Demo replies work offline</p>
+    </main>
+
+    <main id="chatView" class="hidden">
+      <div class="chat-header">
+        <button class="back-button" id="backButton" aria-label="Back">‹</button>
+        <div class="avatar small" id="chatAvatar">A</div>
+        <div class="chat-person">
+          <strong id="chatName">Alex</strong>
+          <span><i class="online-dot"></i> Fictional AI character</span>
+        </div>
+        <button class="icon-button" id="characterInfoButton" aria-label="Character info">⋯</button>
+      </div>
+      <div class="story-note" id="storyNote">A new story begins here.</div>
+      <div id="messages" class="messages"></div>
+      <div class="typing hidden" id="typing"><span></span><span></span><span></span> <small>typing</small></div>
+      <form id="messageForm" class="composer">
+        <input id="messageInput" autocomplete="off" maxlength="1200" placeholder="Write a message..." aria-label="Message">
+        <button type="submit" class="send-button" aria-label="Send message">➤</button>
+      </form>
+      <p class="chat-disclaimer">AI-generated fiction. Replies may be imperfect.</p>
+    </main>
+
+    <nav class="bottom-nav" id="bottomNav">
+      <button class="nav-item active" id="homeNav"><span>⌂</span>Home</button>
+      <button class="nav-item" id="chatsNav"><span>♡</span>Chats</button>
+      <button class="nav-item" id="settingsNav"><span>⚙</span>Settings</button>
+    </nav>
+  </div>
+
+  <div class="modal-backdrop hidden" id="settingsModal">
+    <section class="modal">
+      <div class="modal-title-row"><div><p class="eyebrow">PERSONALIZE</p><h2>Settings</h2></div><button class="icon-button" id="closeSettings">✕</button></div>
+      <label class="label" for="apiKeyInput">Gemini API key (optional)</label>
+      <input id="apiKeyInput" class="settings-input" type="password" placeholder="Paste your own API key">
+      <p class="help-text">Demo mode works without a key. For personal testing only, you can enter a key to try live AI replies. Do not publish a site containing your API key. This prototype keeps the key in this browser only; remove it when finished.</p>
+      <label class="label" for="modelInput">Model name</label>
+      <input id="modelInput" class="settings-input" value="gemini-2.5-flash" placeholder="Model name">
+      <label class="check-row"><input type="checkbox" id="useAiToggle"> Use live AI when an API key is set</label>
+      <button class="primary-button full" id="saveSettings">Save settings</button>
+      <button class="secondary-button full" id="removeKeyButton">Remove API key</button>
+      <p id="settingsStatus" class="status-text" role="status"></p>
+      <p class="help-text">Get API key from Google AI Studio: aistudio.google.com. Availability and free limits can change by region, model and account.</p>
+    </section>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>
